@@ -1,39 +1,34 @@
-import { LaptopOutlined, HighlightOutlined, BookOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import React from 'react';
-import Table from './Table'
+import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
+import React, { useState } from 'react';
 import { RiUser3Line, RiPantoneFill } from 'react-icons/ri'
 import { Button, Typography, Box } from '@mui/material';
+import SiderComponent from './SiderComponent';
+import Table from './Table'
+import Menu from './Menu'
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 
-const items2 = [
-	{
-		name: 'Users',
-		icon: UserOutlined,
-		children: []
-	}, {
-		name: 'Courses',
-		icon: LaptopOutlined,
-		children: ['Lessons','Excercises']
-	}
 
-].map((item, index) => {
-	return {
-		key: index,
-		icon: React.createElement(item?.icon),
-		label: item?.name,
-		children: item?.children.map((obj, j) => {
-			const subKey = index * 4 + j + 1;
-			return {
-				key: subKey,
-				label: obj,
-			};
-		}),
-	};
-});
-const LayoutComponent = () => {
+const LayoutComponent = ({chidren}) => {
+	const style = {
+    fontSize: "30px",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  };
 
+//   const components = {
+//     1: <Table />,
+// 		2: <TableCoures/>
+//   };
+
+  const [render, updateRender] = useState(1);
+
+  const handleMenuClick = menu => {
+    updateRender(menu.key);
+  };
 	return (
 		<Layout>
 			<Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -48,23 +43,9 @@ const LayoutComponent = () => {
 					<Button variant='contained' style={{ color: 'white', marginLeft: '10px', backgroundColor: '#5419dd' }} >Log out</Button>
 				</div>
 			</Header>
-			<Layout>
-				<Sider
-					width={300}
-				>
-					<Menu
-						mode="inline"
-						defaultSelectedKeys={['0']}
-						style={{
-							height: '100%',
-							borderRight: 0,
-							fontWeight:500,
-							fontSize:15,
-							
-						}}
-						items={items2}
-					/>
-				</Sider>
+			<Layout  style={{ minHeight: "100vh" }}>
+				{/* <SiderComponent handleClick={handleMenuClick} /> */}
+				<Menu />
 				<Layout
 					style={{
 						padding: '0 24px 24px',
@@ -78,7 +59,7 @@ const LayoutComponent = () => {
 							borderRadius: '6px'
 						}}
 					>
-						<Table />
+						{chidren}
 					</Content>
 				</Layout>
 			</Layout>

@@ -8,6 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { RiStarSmileFill, RiHeart3Fill } from 'react-icons/ri'
 import { Row, Col } from 'antd'
+import Link from 'next/link';
+import { getDatabase, ref, child, get, set } from "firebase/database";
+import { database } from '../../firebase'
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -51,16 +54,26 @@ export const Container = styled(Card)(() => {
 		},
 		'.text': {
 			backgroundColor: '#fff',
-			borderRadius:'50px',
+			borderRadius: '50px',
 			color: 'black',
 			fontSize: '12px',
-			fontWeight:600,
+			fontWeight: 600,
 			padding: ' 16px 32px',
 		}
 	};
 });
 export default function RecipeReviewCard() {
-
+	const dbRef = ref();
+	get(child(dbRef, `users`)).then((snapshot) => {
+		console.log(snapshot.exists(), 'ji')
+		if (snapshot.exists()) {
+			console.log(snapshot.val());
+		} else {
+			console.log("No data available");
+		}
+	}).catch((error) => {
+		console.error(error);
+	});
 	const [expanded, setExpanded] = useState(false);
 	const [love, setLove] = useState(false)
 
@@ -189,7 +202,8 @@ export default function RecipeReviewCard() {
 										className='img-course'
 									/>
 									<div className="middle">
-										<div className="text">Xem khóa học</div>
+										<Link href='/code-select'><div className="text">Xem khóa học</div></Link>
+
 									</div>
 
 									{/* <CardActions disableSpacing>
@@ -214,6 +228,9 @@ export default function RecipeReviewCard() {
 					</Row>
 				</Box>
 			</Box>
+			<div>
+
+			</div>
 		</>
 	);
 }

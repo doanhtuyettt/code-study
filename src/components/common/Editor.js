@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic'
-
-
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { RiTerminalLine } from 'react-icons/ri'
 import { Box, Typography, Button, styled } from '@mui/material';

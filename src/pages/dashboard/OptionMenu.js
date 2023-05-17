@@ -3,26 +3,22 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { RiApps2Line } from 'react-icons/ri'
+import { useRouter } from 'next/router';
 const options = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
+  {
+    key:'login',
+    label:'Login'
+  },
+  {
+    key:'/',
+    label:'Log out'
+  }
 ];
 
 const ITEM_HEIGHT = 48;
 
 export default function OptionMenu() {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -60,8 +56,8 @@ export default function OptionMenu() {
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-            {option}
+          <MenuItem key={option.key} selected={option === 'Pyxis'} onClick={()=>router.push(option.key)}>
+            {option.label}
           </MenuItem>
         ))}
       </Menu>
