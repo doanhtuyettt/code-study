@@ -63,7 +63,7 @@ export const Container = styled(Card)(() => {
 	};
 });
 export default function RecipeReviewCard() {
-	const dbRef = ref();
+	const dbRef = ref(database);
 	get(child(dbRef, `users`)).then((snapshot) => {
 		console.log(snapshot.exists(), 'ji')
 		if (snapshot.exists()) {
@@ -125,6 +125,29 @@ export default function RecipeReviewCard() {
 		},
 	]
 
+	const listCourse3 = [
+		{
+			name: 'html',
+			img: 'https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png',
+			detail: 'Khóa học phù hợp cho những bạn lần đầu làm quen với lập trình web'
+		}, {
+			name: 'html',
+			img: 'https://files.fullstack.edu.vn/f8-prod/courses/2.png',
+			detail: 'Khóa học phù hợp cho những bạn đã quen với lập trình web'
+		}
+		, {
+			name: 'html',
+			img: 'https://files.fullstack.edu.vn/f8-prod/courses/6.png',
+			detail: 'Khóa học phù hợp cho những bạn đã quen với lập trình web'
+		},
+		{
+			name: 'html',
+			img: 'https://files.fullstack.edu.vn/f8-prod/courses/20/62f13dded314e.png',
+			detail: 'Khóa học phù hợp cho những bạn đã quen với lập trình web'
+		},
+	]
+
+
 	return (
 		<>
 			<Box sx={{ mt: 5 }}>
@@ -178,7 +201,7 @@ export default function RecipeReviewCard() {
 
 				</Box>
 			</Box>
-			<Box sx={{ mt: 5 }}>
+			<Box sx={{ my: 5 }}>
 				<Box sx={{ display: 'flex' }}>
 					<Typography sx={{
 						color: '#242424',
@@ -190,9 +213,9 @@ export default function RecipeReviewCard() {
 
 				</Box>
 				<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-					<Row gutter={16}>
+					<Row gutter={24} style={{marginBottom: '40px'}}>
 						{listCourse2.map(item =>
-							<Col span={6}>
+							<Col span={6} >
 								<Container className='container-box' sx={{ borderRadius: '25px', maxWidth: 325, boxShadow: ' 5px 10px 18px #888888' }}>
 									<CardMedia
 										component="img"
@@ -202,11 +225,11 @@ export default function RecipeReviewCard() {
 										className='img-course'
 									/>
 									<div className="middle">
-										<Link href='/code-select'><div className="text">Xem khóa học</div></Link>
+										<Link href='/learning/123'><div className="text">Xem khóa học</div></Link>
 
 									</div>
 
-									{/* <CardActions disableSpacing>
+									 <CardActions disableSpacing>
 										<IconButton aria-label="add to favorites">
 											<RiHeart3Fill color={love ? '#f31336' : 'grey'} onClick={() => setLove(prev => !prev)} />
 										</IconButton>
@@ -221,16 +244,52 @@ export default function RecipeReviewCard() {
 										>
 									
 										</ExpandMore>
-									</CardActions> */}
+									</CardActions> 
+								</Container>
+							</Col>
+						)}
+					</Row>
+				</Box>
+				<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+					<Row gutter={24} style={{marginBottom: '40px'}} >
+						{listCourse3.map(item =>
+							<Col span={6}>
+								<Container className='container-box' sx={{ borderRadius: '25px', maxWidth: 325, boxShadow: ' 5px 10px 18px #888888' }}>
+									<CardMedia
+										component="img"
+										height="194"
+										image={item?.img}
+										alt="Paella dish"
+										className='img-course'
+									/>
+									<div className="middle">
+										<Link href='/code-select'><div className="text">Xem khóa học</div></Link>
+
+									</div>
+
+									<CardActions disableSpacing>
+										<IconButton aria-label="add to favorites">
+											<RiHeart3Fill color={love ? '#f31336' : 'grey'} onClick={() => setLove(prev => !prev)} />
+										</IconButton>
+										<IconButton aria-label="share">
+						
+										</IconButton>
+										<ExpandMore
+											expand={expanded}
+											onClick={handleExpandClick}
+											aria-expanded={expanded}
+											aria-label="show more"
+										>
+									
+										</ExpandMore>
+									</CardActions> 
 								</Container>
 							</Col>
 						)}
 					</Row>
 				</Box>
 			</Box>
-			<div>
-
-			</div>
+			
 		</>
 	);
 }

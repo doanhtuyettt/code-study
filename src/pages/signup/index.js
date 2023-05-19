@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { InputAdornment, IconButton, OutlinedInput, Grid, FormControl, InputLabel, Paper, Box, Avatar, TextField, Button, Typography, Link, FormControlLabel, Checkbox } from '@mui/material'
 import { RiSkypeLine, RiGoogleFill, RiFacebookCircleLine, RiEyeOffLine, RiEyeLine } from 'react-icons/ri'
-import { Layout, Menu, Col } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import { RiPantoneFill } from 'react-icons/ri'
+import ModalLogin from '@/components/modal/ModalLogin';
+import { styled } from "@mui/material/styles";
 
-const { Header, Content, Footer, Sider } = Layout
+const { Header } = Layout
 const Login = () => {
 	const paperStyle = { position: 'relative', padding: 20, minHeight: '80vh', width: 400, margin: "20px auto", borderRadius: '20px', boxShadow: '0px 0px 20px rgba(29, 32, 188, 0.2)!important' }
 	const avatarStyle = { backgroundColor: '#5419dd', width: 50, height: 50 }
@@ -39,9 +41,37 @@ const Login = () => {
 		}
 	]
 	const [value, setValue] = useState()
-	const handleChange =(key)=>{
+	const handleChange = (key) => {
 		setValue(key)
 	}
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleOk = () => {
+		setIsModalOpen(false);
+	};
+
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
+
+	const ContainerStyle = styled(Modal)(({
+	}) => ({
+		'& .ant-modal-footer':{
+			display:'none'
+		},
+		'& .ant-modal-header':{
+			display:'none'
+		},
+		'& .ant-modal-close-x':{
+			display:'none'
+		}
+			
+		
+	}));
 
 	return (
 
@@ -65,12 +95,17 @@ const Login = () => {
 				>
 					CODE STUDY
 				</Typography>
-				<Menu theme="dark" onChange={handleChange} mode="horizontal" defaultSelectedKeys={value} items={items1} style={{ width: '80%', background: '#5419dd' ,fontWeight:600}} />
-				<Link href='/login'>
-				<div style={{background:'#e8505b', padding:'8px 20px',color:'#fff', fontWeight:600,cursor:'pointer'}}>LOGIN</div>
-				</Link>
+				<Menu theme="dark" onChange={handleChange} mode="horizontal" defaultSelectedKeys={value} items={items1} style={{ width: '80%', background: '#5419dd', fontWeight: 600 }} />
+
+				<Button style={{ background: '#e8505b', padding: '8px 20px', color: '#fff', fontWeight: 600, cursor: 'pointer' }} onClick={showModal}>LOGIN</Button>
+	
+				<ContainerStyle title="" open={isModalOpen}>
+					
+					<ModalLogin />
+				</ContainerStyle>
+			
 			</Header>
-			<img src='https://images.viblo.asia/8c7fd240-2385-4b65-b185-00f04e5cb3a3.png' style={{transform: 'translate(-17%, 11%)' }} />
+			<img src='https://images.viblo.asia/8c7fd240-2385-4b65-b185-00f04e5cb3a3.png' style={{ transform: 'translate(-17%, 11%)' }} />
 			<div style={headStyle}>
 				<Grid>
 					<Paper elevation={10} style={paperStyle}>

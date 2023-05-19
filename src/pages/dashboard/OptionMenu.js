@@ -10,7 +10,7 @@ const options = [
     label:'Login'
   },
   {
-    key:'/',
+    key:'/dashboard',
     label:'Log out'
   }
 ];

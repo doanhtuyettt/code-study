@@ -31,8 +31,7 @@ const CodeEditor = () => {
 						</ul>
 
 
-						<Typography sx={{ fontSize: 15 }}>Write a program that creates a script díplay "Code Study" then prints the following text on the screen:</Typography>
-						<pre class=" language-markup" style={{ background: 'black', padding: '15px' }}><code class=" language-markup" style={{ color: 'white' }}>Hello Code Study</code></pre>
+
 					</Box>
 					<Box sx={{ mb: 2 }}>
 						<Typography sx={{ fontSize: 23, fontWeight: 600, mb: 1 }}>Instruction</Typography>
