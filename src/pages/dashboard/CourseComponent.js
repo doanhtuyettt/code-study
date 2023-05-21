@@ -11,6 +11,7 @@ import { Row, Col } from 'antd'
 import Link from 'next/link';
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { database } from '../../firebase'
+import CardComponent from './CardComponent';
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -164,37 +165,7 @@ export default function RecipeReviewCard() {
 				<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
 					<Row gutter={16}>
 						{listCourse.map(item =>
-							<Col span={6}>
-								<Card sx={{ borderRadius: '25px', maxWidth: 325, boxShadow: ' 5px 10px 18px #888888' }}>
-									<CardMedia
-										component="img"
-										height="194"
-										image={item?.img}
-										alt="Paella dish"
-									/>
-									<CardContent>
-										<Typography variant="body1" color="text.secondary">
-											{item?.detail}
-										</Typography>
-									</CardContent>
-									<CardActions disableSpacing>
-										<IconButton aria-label="add to favorites">
-											<RiHeart3Fill color={love ? '#f31336' : 'grey'} onClick={() => setLove(prev => !prev)} />
-										</IconButton>
-										<IconButton aria-label="share">
-											{/* <ShareIcon /> */}
-										</IconButton>
-										<ExpandMore
-											expand={expanded}
-											onClick={handleExpandClick}
-											aria-expanded={expanded}
-											aria-label="show more"
-										>
-											{/* <ExpandMoreIcon /> */}
-										</ExpandMore>
-									</CardActions>
-								</Card>
-							</Col>
+							<CardComponent item={item}/>
 						)}
 
 					</Row>

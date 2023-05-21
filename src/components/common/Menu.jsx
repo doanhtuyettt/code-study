@@ -1,11 +1,14 @@
-import { Layout, Menu, Progress, Popover } from 'antd';
+import { Layout, Menu, Progress, } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import IconUser from './Icons/IconUser'
 import IconCashBook from './Icons/IconCashBook';
+import { styled } from '@mui/material';
+import { FundProjectionScreenOutlined, HomeOutlined, HourglassOutlined, PlusOutlined, AndroidOutlined } from '@ant-design/icons';
+import { Box } from '@mui/material'
 
 const { Sider } = Layout;
-
+const SubMenu = Menu.SubMenu;
 export default function SidebarComponent() {
 	const router = useRouter();
 	const [currentKey, setCurrentKey] = useState('/');
@@ -32,7 +35,21 @@ export default function SidebarComponent() {
 		},
 
 	]
-
+	const [colap, setColap] = useState(false)
+	const onCollapse = () => {
+		setColap(!colap);
+	};
+	const StyleLayer = styled(Box)(() => ({
+		position: 'relative',
+		background: 'white',
+		'& .ant-layout-sider': {
+			background: 'white',
+			height: '100%',
+			'& .ant-layout-sider-trigger': {
+				position: 'absolute'
+			}
+		}
+	}))
 	const onOpenChange = (keys) => {
 		localStorage.setItem('submenu', JSON.stringify(keys));
 	};
@@ -62,31 +79,34 @@ export default function SidebarComponent() {
 		}
 	};
 	return (
-		<Sider className="sidebar" width={240} style={{ backgroundColor: '#fff' }}>
-			<Menu
-				mode="inline"
-				style={{
-					color: '#33343E',
-					fontWeight: 500,
-					backgroundColor: '#fff',
-					borderRight: 'none',
-				}}
-				forceSubMenuRender={true}
-				items={menus.map((item => ({ ...item, icon: getIcon(item.key) })))}
-				onClick={({ key }) => {
-					router.push(key.toLowerCase());
-				}}
-				onSelect={({ key }) => {
-					if (key === '/pos') {
-						window.open(`${window.location.origin}/pos`, '_blank');
-					} else {
-						setCurrentKey(key);
-					}
-				}}
-				defaultSelectedKeys={[router.pathname]}
-				onOpenChange={onOpenChange}
-				theme="light"
-			/>
-		</Sider>
+
+		<StyleLayer>
+			<Sider
+				collapsible
+				collapsed={colap}
+				onCollapse={onCollapse}
+			>
+				<div className="logo" />
+				<Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
+					<Menu.Item key="1" onClick={() => router.push('/user')}>
+						<HomeOutlined />
+						<span>Users</span>
+					</Menu.Item>
+					<SubMenu
+						key="sub2"
+						title={
+							<span onClick={()=> router.push('/courses')}>
+								<HourglassOutlined />
+								<span>Coures</span>
+							</span>
+						}
+					>
+						<Menu.Item key="6" onClick={()=>router.push('/leson')}>Lessons</Menu.Item>
+						<Menu.Item key="8">Excercise</Menu.Item>
+					</SubMenu>
+
+				</Menu>
+			</Sider>
+		</StyleLayer>
 	);
 }

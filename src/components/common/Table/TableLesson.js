@@ -1,6 +1,7 @@
-import { Table, Tag } from 'antd';
+import { Table, Tag, Button, Modal } from 'antd';
 import { useState } from 'react';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import AddCourse from '@/components/modal/AddCourse';
 
 const columns = [
     {
@@ -55,7 +56,7 @@ const data = [
     {
         createdAt: 'Nguyen Thi Hai Anh',
         price: 200000,
-        describe:'Object-Oriented-Programming (Object-Oriented-Programming) is an object-',
+        describe: 'Object-Oriented-Programming (Object-Oriented-Programming) is an object-',
         address: `So 1, Hoang Cong Chat, Mai Dich, Cau Giay, Ha Noi`,
         name: 'Advanced C++',
         state: 'Active',
@@ -65,7 +66,7 @@ const data = [
 
         createdAt: 'Nguyen Thi Hai Anh',
         price: 200000,
-        describe:'Object-Oriented-Programming (Object-Oriented-Programming) is an object-',
+        describe: 'Object-Oriented-Programming (Object-Oriented-Programming) is an object-',
         address: `Ha Dong, Ha Noi`,
         name: 'Object Oriented Programming',
         numberTasks: 80,
@@ -76,7 +77,7 @@ const data = [
 
         createdAt: 'Nguyen Manh Hung',
         price: 200000,
-        describe:'Learn the basic of Java programming language through interactive coding',
+        describe: 'Learn the basic of Java programming language through interactive coding',
         address: `Thanh Xuan, Ha Noi`,
         name: 'C++ for Beginners',
         state: 'Inactive',
@@ -86,7 +87,7 @@ const data = [
 
         createdAt: 'Nguyen Van Quan',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Hai Duong`,
         name: 'C for Beginners',
         state: 'Active',
@@ -96,7 +97,7 @@ const data = [
 
         createdAt: 'Hoang Thi Ngoc Anh',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Thai Binh`,
         name: 'Basic algorithms',
         state: 'Active',
@@ -106,7 +107,7 @@ const data = [
 
         createdAt: 'Pham Ha Linh',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Ha Noi`,
         name: 'Data Structure and Algorithms',
         state: 'In coming',
@@ -116,7 +117,7 @@ const data = [
 
         createdAt: 'Le Luu Hoang',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Thuong Tin, Ha Noi`,
         name: 'Java fundamentals',
         state: 'Active'
@@ -125,7 +126,7 @@ const data = [
 
         createdAt: 'Le Long Viet',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Hai Phong`,
         name: 'Computer Software',
         state: 'Inactive'
@@ -134,7 +135,7 @@ const data = [
 
         createdAt: 'Do Ly Ly',
         price: 200000,
-        describe:'This course was created for complete beginners and will teach you',
+        describe: 'This course was created for complete beginners and will teach you',
         address: `Ha Giang`,
         name: 'Introduction to SQL',
         state: 'Active'
@@ -143,7 +144,7 @@ const data = [
 
         createdAt: 'Le Thi Ha',
         price: 200000,
-        describe:'Learn the basic of Java programming language through interactive coding',
+        describe: 'Learn the basic of Java programming language through interactive coding',
         address: `Ha Nam`,
         name: 'Python fundamentals',
         state: 'Active'
@@ -203,6 +204,20 @@ const App = () => {
         onChange: onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    console.log(isModalOpen)
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     return (
         <div>
             <div
@@ -210,9 +225,12 @@ const App = () => {
                     marginBottom: 16,
                 }}
             >
-                <span>
-                    {hasSelected ? `Selected ${selectedRowKeys.length} lessons` : ''}
-                </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px 16px' }}>
+                    {hasSelected ? `Selected ${selectedRowKeys.length} lessons` : `Selected 0 lessons`}
+                    <Button onClick={showModal} style={{ background: ' #5419dd', color: 'white', height: '40px' }}>Add User</Button>
+                    <AddCourse title="Thêm mới khóa học " open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
+
+                </div>
             </div>
             <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
         </div>

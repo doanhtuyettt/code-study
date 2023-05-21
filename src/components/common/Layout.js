@@ -31,7 +31,7 @@ const LayoutComponent = ({chidren}) => {
   };
 	return (
 		<Layout>
-			<Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+			{/* <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					<RiPantoneFill color={'rgb(84, 25, 221)'} size={30} />
 					<Typography color={'white'} sx={{ fontWeight: 800, ml: 2 }}>CODE STUDY</Typography>
@@ -42,7 +42,7 @@ const LayoutComponent = ({chidren}) => {
 					<RiUser3Line color={'white'} size={20} />
 					<Button variant='contained' style={{ color: 'white', marginLeft: '10px', backgroundColor: '#5419dd' }} >Log out</Button>
 				</div>
-			</Header>
+			</Header> */}
 			<Layout  style={{ minHeight: "100vh" }}>
 				{/* <SiderComponent handleClick={handleMenuClick} /> */}
 				<Menu />

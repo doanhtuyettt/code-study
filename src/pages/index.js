@@ -30,7 +30,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <Space size={20} direction="vertical">
+    <Space size={20} direction="vertical" style={{width:'100%', padding:'0 40px'}}>
       <Typography.Title level={4}>Dashboard</Typography.Title>
       <Space direction="horizontal">
         <DashboardCard
@@ -126,7 +126,7 @@ function RecentOrders() {
 
   return (
     <>
-      <Typography.Text>Recent Orders</Typography.Text>
+      <Typography.Text style={{fontWeight:600, fontSize:'28px'}}>Recent Orders</Typography.Text>
       <Table
         columns={[
           {

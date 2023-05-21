@@ -42,7 +42,17 @@ const Editor = ({ heading, language, value, onChange, icon, color }) => {
     const [open, setOpen] = useState(true);
 
     const handleChange = (editor, data, value) => {
+        console.log('val', value)
         onChange(value);
+    }
+    const onBeforeChange = (change) => {
+        console.log('calling beforeChange');
+    }
+
+    const onChanges = (newCode) => {
+        onChange(
+            newCode
+        )
     }
 
     return (
@@ -70,7 +80,8 @@ const Editor = ({ heading, language, value, onChange, icon, color }) => {
                 <RiTerminalLine onClick={() => setOpen(prev => !prev)} />
             </Header>
             <CodeMirror
-                onBeforeChange={handleChange}
+                onBeforeChange={onBeforeChange}
+                onChange={onChanges}
                 value={value}
                 className="controlled-editor"
                 options={{

@@ -2,6 +2,7 @@ import { Button, Table, Tag } from 'antd';
 import { useState } from 'react';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Box } from '@mui/material';
+import AddUser from '../modal/AddUser';
 const columns = [
   {
     title: 'Name',
@@ -228,6 +229,20 @@ const App = () => {
     onChange: onSelectChange,
   };
   const hasSelected = selectedRowKeys.length > 0;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log(isModalOpen)
+  const showModal = () => {
+      setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+      setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+      setIsModalOpen(false);
+  };
   return (
     <div>
       <div
@@ -235,9 +250,12 @@ const App = () => {
           marginBottom: 16,
         }}
       >
-        <span>
-          {hasSelected ? `Selected ${selectedRowKeys.length} users` : ''}
-        </span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px 16px' }}>
+          {hasSelected ? `Selected ${selectedRowKeys.length} lessons` : ''}
+          {/* <Button onClick={showModal} style={{ background: ' #5419dd', color: 'white', height: '40px' }}>Add User</Button>
+          <AddUser title="Thêm người dùng " open={isModalOpen} onOk={handleOk} onCancel={handleCancel} /> */}
+
+        </div>
       </div>
       <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
     </div>

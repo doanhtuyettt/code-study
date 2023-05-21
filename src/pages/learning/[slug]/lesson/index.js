@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Avatar } from "@mui/material"
-import Header from "../learning/[slug]/lesson/Header"
+import Header from "./Header"
 import Code from "@/components/common/Code"
 import React, { useState } from "react"
 import Result from "@/components/common/Result"
@@ -9,6 +9,7 @@ const CodeEditor = () => {
 	const [js, setJs] = useState();
 	const [css, setCss] = useState();
 	const avatarStyle = { backgroundColor: '#5419dd', width: 30, height: 30, marginBottom: '20px' }
+	console.log('ht',html)
 	return (
 		<Box>
 			<Header />

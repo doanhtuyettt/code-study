@@ -13,6 +13,7 @@ const Result = ({ html, css, js, setHtml, setCss, setJs }) => {
             <script>${js}</script>
         </html>
     `
+    console.log(src)
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -24,15 +25,16 @@ const Result = ({ html, css, js, setHtml, setCss, setJs }) => {
 
     return (
         <Container style={html || css || js ? null : { background: '#444857' }}>
-            {/* <iframe
+            <iframe
                 srcDoc={src}
                 title="output"
                 sandbox="allow-scripts"
                 frameBorder="0"
                 width="100%"
                 height="100%"
-            /> */}
-            <Typography color={'white'} sx={{ml :2}}>...</Typography>
+                style={{background: '#444857'}}
+            />
+            {/* <Typography color={'white'} sx={{ml :2}}>...</Typography> */}
         </Container>
     )
 }

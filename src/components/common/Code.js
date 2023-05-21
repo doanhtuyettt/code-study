@@ -10,7 +10,7 @@ const Container = styled(Box)`
 `
 
 const Code = ({html,css,js ,setHtml,setCss,setJs}) => {
-	
+	console.log(html,'html')
 	return (
 		<Container>
 			<Editor

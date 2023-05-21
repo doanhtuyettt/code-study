@@ -55,7 +55,7 @@ function HeaderDash({ user, SignInUser }) {
 						variant="h6"
 						noWrap
 						component="a"
-						href="/"
+						href="/dashboard"
 						sx={{
 							mx: 2,
 							display: { xs: 'none', md: 'flex' },
@@ -70,7 +70,7 @@ function HeaderDash({ user, SignInUser }) {
 					</Typography>
 				</Toolbar>
 				<Toolbar>
-					<Typography sx={{ mr: 2 }}>{user ? user.name : ''}</Typography>
+					<Typography sx={{ mr: 2 }}>{user ? user.email : ''}</Typography>
 
 					<Tooltip title="Open settings">
 						<Avatar style={avatarStyle}>

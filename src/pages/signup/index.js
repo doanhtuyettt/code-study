@@ -8,11 +8,14 @@ import { toast, ToastContainer } from "react-toastify";
 import { database } from "../../firebase";
 import { Store } from "../_app";
 import Link from "next/link";
+// import firebase from "firebase/app";
+import auth from '../../firebase'
 
 const SignUp = () => {
 	const router = useRouter();
 	const [account, setAccount] = useState();
 	const { SignInUser } = useContext(Store);
+	// const ggProvider = new auth.GoogleAuthProvider();
 	const { url } = router.query;
 	const paperStyle = { position: 'relative', padding: 20, minHeight: '80vh', width: 400, margin: "20px auto", borderRadius: '20px', boxShadow: '0px 0px 20px rgba(29, 32, 188, 0.2)!important' }
 	const avatarStyle = { backgroundColor: '#5419dd', width: 50, height: 50 }
@@ -46,6 +49,17 @@ const SignUp = () => {
 			label: 'Game'
 		}
 	]
+	const handleSignUp = () => {
+		auth().signInWithPopup(ggProvider).then(function(result) {
+			var token = result.credential.accessToken;
+			var user = result.user;
+			console.log('User>>Goole>>>>', user);
+			userId = user.uid;
+
+		}).catch(function(error) {
+			console.error('Error: hande error here>>>', error.code)
+		})
+	}
 	const AddAccount = () => {
 		try {
 			const accountList = child(ref(database), `account`);
@@ -191,7 +205,7 @@ const SignUp = () => {
 						</Typography>
 						<Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mb: 2 }}>
 							<RiFacebookCircleLine color={"#36589d5"} size={40} />
-							<RiGoogleFill color={"#ea230f"} size={40} />
+							<RiGoogleFill color={"#ea230f"} size={40} onClick={handleSignUp}/>
 							<RiSkypeLine color={"#00a4f5"} size={40} />
 						</Box>
 						<Typography sx={{ textAlign: 'center' }}>
