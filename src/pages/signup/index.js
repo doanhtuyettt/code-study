@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
-import { InputAdornment, IconButton, OutlinedInput, Grid, FormControl, InputLabel, Paper, Box, Avatar, TextField, Button, Typography, Link, FormControlLabel, Checkbox } from '@mui/material'
+import { InputAdornment, IconButton, OutlinedInput, Grid, FormControl, InputLabel, Paper, Box, Avatar, TextField, Button, Typography, FormControlLabel, Checkbox } from '@mui/material'
 import { RiSkypeLine, RiGoogleFill, RiFacebookCircleLine, RiEyeOffLine, RiEyeLine } from 'react-icons/ri'
-import { Layout, Menu, Modal } from 'antd';
-import { RiPantoneFill } from 'react-icons/ri'
-import ModalLogin from '@/components/modal/ModalLogin';
-import { styled } from "@mui/material/styles";
+import { Layout } from 'antd';
+import { child, set, ref, push, get } from "firebase/database";
+import { useRouter } from "next/router";
+import React, { useContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { database } from "../../firebase";
+import { Store } from "../_app";
+import Link from "next/link";
 
-const { Header } = Layout
-const Login = () => {
+const SignUp = () => {
+	const router = useRouter();
+	const [account, setAccount] = useState();
+	const { SignInUser } = useContext(Store);
+	const { url } = router.query;
 	const paperStyle = { position: 'relative', padding: 20, minHeight: '80vh', width: 400, margin: "20px auto", borderRadius: '20px', boxShadow: '0px 0px 20px rgba(29, 32, 188, 0.2)!important' }
 	const avatarStyle = { backgroundColor: '#5419dd', width: 50, height: 50 }
 	const [showPassword, setShowPassword] = useState(false);
@@ -40,43 +46,60 @@ const Login = () => {
 			label: 'Game'
 		}
 	]
-	const [value, setValue] = useState()
-	const handleChange = (key) => {
-		setValue(key)
-	}
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const AddAccount = () => {
+		try {
+			const accountList = child(ref(database), `account`);
+			get(accountList)
+				.then((snapshot) => {
+					if (snapshot.exists()) {
+						const arrAccounts = snapshot.val();
+						console.log(arrAccounts, 'ii');
+						const boolRegister = arrAccounts.findIndex(
+							(user) => user?.email === account.email
+						);
 
-	const showModal = () => {
-		setIsModalOpen(true);
-	};
-
-	const handleOk = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleCancel = () => {
-		setIsModalOpen(false);
-	};
-
-	const ContainerStyle = styled(Modal)(({
-	}) => ({
-		'& .ant-modal-footer':{
-			display:'none'
-		},
-		'& .ant-modal-header':{
-			display:'none'
-		},
-		'& .ant-modal-close-x':{
-			display:'none'
+						//sucess
+						if (boolRegister == -1) {
+							toast.success("Đăng ký thành công");
+							const id = arrAccounts.length + "";
+							const acc = ref(database, `account/` + id);
+							const accountSign = { ...account, userId: id };
+							set(acc, accountSign);
+							SignInUser(accountSign);
+							if (url) {
+								router.push(url);
+							} else {
+								router.push("/dashboard");
+							}
+						} else {
+							toast.error("Username đã được sử dụng");
+						}
+					}
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+			// accountList.map((account) => console.log(account));
+			// child(accountList, "0");
+			// set(accountList, account);
+			// SignInUser(account);
+			// toast.success("Đăng ký thành công");
+			// if (url) {
+			//   router.push(url);
+			// } else {
+			//   router.push("/");
+			// }
+		} catch (error) {
+			console.error(error);
+			toast.success("Đăng ký không thành công");
 		}
-			
-		
-	}));
+	};
+
 
 	return (
 
 		<Layout style={{ background: '#fff' }}>
-			<Header style={{ display: 'flex', alignItems: 'center', position: 'sticky', background: '#5419dd', width: '100%' }}>
+			{/* <Header style={{ display: 'flex', alignItems: 'center', position: 'sticky', background: '#5419dd', width: '100%' }}>
 				<RiPantoneFill color={'white'} size={30} />
 				<Typography
 					variant="h6"
@@ -104,7 +127,7 @@ const Login = () => {
 					<ModalLogin />
 				</ContainerStyle>
 			
-			</Header>
+			</Header> */}
 			<img src='https://images.viblo.asia/8c7fd240-2385-4b65-b185-00f04e5cb3a3.png' style={{ transform: 'translate(-17%, 11%)' }} />
 			<div style={headStyle}>
 				<Grid>
@@ -116,10 +139,14 @@ const Login = () => {
 						</Grid>
 
 						<TextField label='Username' placeholder='Enter username' fullWidth required sx={{ mb: 2.5 }} />
-						<TextField label='Email' placeholder='Enter email' type='password' fullWidth required sx={{ mb: 2.5 }} />
+						<TextField label='Email' placeholder='Enter email' fullWidth required sx={{ mb: 2.5 }} onChange={(e) =>
+							setAccount({ ...account, email: e.target.value })
+						} />
 
-						<FormControl sx={{ width: '100%' }} variant="outlined">
-							<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+						<FormControl sx={{ width: '100%' }} variant="outlined" onChange={(e) =>
+								setAccount({ ...account, password: e.target.value })
+							}>
+							<InputLabel htmlFor="outlined-adornment-password" >Password</InputLabel>
 							<OutlinedInput
 								id="outlined-adornment-password"
 								type={showPassword ? 'text' : 'password'}
@@ -154,7 +181,7 @@ const Login = () => {
 								</Link>
 							</Typography>
 						</Box>
-						<Button variant='contained' fullWidth sx={{ bgcolor: '#5419dd!important', textTransform: 'none', fontSize: 18, mb: 2 }}>Start coding now !</Button>
+						<Button variant='contained' fullWidth sx={{ bgcolor: '#5419dd!important', textTransform: 'none', fontSize: 18, mb: 2 }} onClick={AddAccount}>Start coding now !</Button>
 						{/* <Typography >
 				<Link href="#" >
 					Forgot password ?
@@ -181,4 +208,4 @@ const Login = () => {
 	)
 }
 
-export default Login
+export default SignUp

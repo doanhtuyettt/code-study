@@ -4,20 +4,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { RiApps2Line } from 'react-icons/ri'
 import { useRouter } from 'next/router';
-const options = [
-  {
-    key:'login',
-    label:'Login'
-  },
-  {
-    key:'/dashboard',
-    label:'Log out'
-  }
-];
 
 const ITEM_HEIGHT = 48;
 
-export default function OptionMenu() {
+export default function OptionMenu({ user, SignInUser }) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -27,7 +17,11 @@ export default function OptionMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const hanldeLogOut = () => {
+    localStorage.removeItem("user");
+    SignInUser(null);
+    router.push("/signup");
+  }
   return (
     <div>
       <IconButton
@@ -38,7 +32,7 @@ export default function OptionMenu() {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <RiApps2Line color={'white'}/>
+        <RiApps2Line color={'white'} />
       </IconButton>
       <Menu
         id="long-menu"
@@ -55,11 +49,15 @@ export default function OptionMenu() {
           },
         }}
       >
-        {options.map((option) => (
-          <MenuItem key={option.key} selected={option === 'Pyxis'} onClick={()=>router.push(option.key)}>
-            {option.label}
-          </MenuItem>
-        ))}
+
+        <MenuItem onClick={() => {
+          router.push('/profile')
+        }}>
+          Profile
+        </MenuItem>
+        <MenuItem onClick={hanldeLogOut}>
+          Log out
+        </MenuItem>
       </Menu>
     </div>
   );

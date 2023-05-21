@@ -9,32 +9,46 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { RiPantoneFill } from 'react-icons/ri'
+import { styled } from "@mui/material/styles";
+import ModalLogin from '@/components/modal/ModalLogin';
+import { Modal, Button } from 'antd'
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function HeaderDash() {
-	const [anchorElNav, setAnchorElNav] = React.useState(null);
+function HeaderDash({ user, SignInUser }) {
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const handleOpenNavMenu = (event) => {
-		setAnchorElNav(event.currentTarget);
-	};
-	const handleOpenUserMenu = (event) => {
-		setAnchorElUser(event.currentTarget);
-	};
-
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
+	const showModal = () => {
+		setIsModalOpen(true);
 	};
 
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
-	const avatarStyle = { backgroundColor: '#fb9e3f', width: 50, height: 50 }
+	const ContainerStyle = styled(Modal)(({
+	}) => ({
+		'& .ant-modal-footer': {
+			display: 'none'
+		},
+		'& .ant-modal-header': {
+			display: 'none'
+		},
+		'& .ant-modal-close-x': {
+			display: 'none'
+		}
+
+
+	}));
+	const avatarStyle = { backgroundColor: '#fb9e3f', width: 50, height: 50, marginRight: '20px' }
+	const router = useRouter();
+
 	return (
 		<AppBar position="static" sx={{ background: '#5419dd' }}>
-			<Container maxWidth="xl" sx={{ m:0, display: 'flex', justifyContent: 'space-between' }}>
+			<Container maxWidth="xl" sx={{ m: 0, display: 'flex', justifyContent: 'space-between' }}>
 				<Toolbar disableGutters>
 					<RiPantoneFill color={'white'} size={30} />
 					<Typography
@@ -56,7 +70,7 @@ function HeaderDash() {
 					</Typography>
 				</Toolbar>
 				<Toolbar>
-					<Typography sx={{ mr: 2 }}>Tuyết Đỗ</Typography>
+					<Typography sx={{ mr: 2 }}>{user ? user.name : ''}</Typography>
 
 					<Tooltip title="Open settings">
 						<Avatar style={avatarStyle}>
@@ -85,8 +99,14 @@ function HeaderDash() {
 						))}
 					</Menu>
 
-					<OptionMenu />
+					{!user ? <Button style={{ background: '#e8505b', padding: '8px 20px', color: '#fff', fontWeight: 600,border: '1px solid transparent', height:'100%'}} onClick={showModal}>LOGIN</Button> : <OptionMenu {...{ user, SignInUser }} />}
 				</Toolbar>
+
+
+				<ContainerStyle title="" open={isModalOpen}>
+
+					<ModalLogin setAction={setIsModalOpen} />
+				</ContainerStyle>
 			</Container>
 		</AppBar>
 	);

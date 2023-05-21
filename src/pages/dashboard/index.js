@@ -6,10 +6,10 @@ import InputTags, { TagsList } from "@/components/input-tags";
 import CourseComponent from './CourseComponent'
 import HeaderDash from "./HeaderDash";
 import { Layout, Menu, Row, Col, FloatButton } from 'antd';
-import { FundProjectionScreenOutlined, HomeOutlined, HourglassOutlined, PlusOutlined } from '@ant-design/icons';
+import { FundProjectionScreenOutlined, HomeOutlined, HourglassOutlined, PlusOutlined, AndroidOutlined } from '@ant-design/icons';
 import { styled } from '@mui/material';
 import Link from "next/link";
-import {RiGamepadLine} from 'react-icons/ri'
+import { RiGamepadLine } from 'react-icons/ri'
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 const SearchForm = forwardRef(({
@@ -64,7 +64,7 @@ const SearchForm = forwardRef(({
 	}
 	return (
 		<>
-			<HeaderDash />
+			{/* <HeaderDash /> */}
 			<Layout>
 				<StyleLayer>
 					<Sider
@@ -97,8 +97,8 @@ const SearchForm = forwardRef(({
 							</Menu.Item>
 
 							<Menu.Item key="4">
-								<RiGamepadLine />
-								<Link href='/game'> GAME</Link>
+								<AndroidOutlined />
+								<span>GAME</span>
 							</Menu.Item>
 							<Menu.Item key="5">
 								<PlusOutlined />
